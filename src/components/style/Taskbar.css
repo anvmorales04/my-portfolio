@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* 3. The Taskbar Styling (25% Height Panel) */
+.taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 12vh; /* Exactly 25% of the window's height */
+  
+  background-color: rgba(72, 61, 63, 1); 
+  backdrop-filter: blur(10px); 
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5vw; /* Scales padding based on width */
+  box-sizing: border-box;
+}
+
+/* Scaled down components to comfortably fit the 8vh taskbar */
+.start-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 1vh 1.5vw; /* Reduced padding for breathing room */
+  font-size: 2.5vh;   /* Scaled down the font */
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease; /* Adds a smooth fade on hover */
+}
+
+.start-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  
+}
+
+.system-tray {
+  color: white;              /* The date will inherit this white color */
+  display: flex;
+  flex-direction: column;    /* Stacks the time and date vertically */
+  align-items: flex-end;     /* Aligns them strictly to the right */
+  justify-content: center;
+  gap: 1px;                  /* Keeps Time and Date close together */
+}
+
+.time {
+  font-size: 2vh; 
+  margin-top: 1vh;   
+  color: #F4EBD9;            /* Changes specifically the time color */
+}
+
+.date {
+  font-size: 1.7vh;          /* Makes the date slightly smaller than the time */
+  color: #F4EBD9; 
+
+}
+
+.small-text {
+  font-size: 1.5vh;          /* Even smaller text for additional info */
+  color: #F4EBD9;       
+  transform: translateY(1vh); /* ADDED: Pushes the name slightly closer to the bottom of the screen */
+  opacity: 0.8;              /* OPTIONAL: Dims the copyright slightly to make it look sleeker */
+}

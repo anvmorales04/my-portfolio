@@ -1,0 +1,248 @@
+/*Projects_Tab */
+@keyframes pageTransition {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mini-page-content {
+  animation: pageTransition 0.4s ease-out forwards;
+  padding: 10px 0;
+    gap: 0;   
+}
+
+.mini-page-content h2 {
+  color: #483D3F;
+  font-weight: 500px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.mini-page-content p {
+  color: #483D3F;
+  line-height: 1.6;
+}
+
+
+.project-square{
+  padding: 20px;
+  flex-grow: 1;
+  background-color: rgba(163, 154, 146, 0.2);
+  border-radius: 8px;
+  border: 2px solid #483D3F;
+
+  overflow-y: auto;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  scrollbar-gutter: stable;
+}
+
+.project-square:hover {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4); 
+  transform: translateY(-2px); 
+}
+
+.content-row .button-tab.active {
+  background-color: #483D3F; 
+  width: 100%;
+
+  transform: translateY(1px); 
+  box-shadow: inset 0px 3px 8px rgba(0, 0, 0, 0.5); 
+}
+
+
+.project-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.tag {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: var(--mono, monospace);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.tag.software {
+  background-color: #E6ECFC;
+  color: #364098;
+  letter-spacing: 1px;
+  border: 1px solid #364098;
+}
+
+.tag.award {
+  background-color: #FFF9E6; 
+  color: #B8860B; 
+  letter-spacing: 1px;
+  border: 1px solid #D4AF37; 
+}
+
+.tag.render {
+  background-color: #FFF1BD;
+  color: #9C5211;
+  border: 1px solid #9C5211;
+}
+
+.tag.capability {
+  background-color: #D1F2E6;
+  color: #1A7F5C;
+  border: 1px solid #1A7F5C;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%; 
+}
+
+.button-row .button-style {
+  flex: 1; 
+  padding: 8px 16px;
+  height: 50px;
+  
+
+  display: flex;          
+  align-items: center;     
+  justify-content: center;  
+  text-decoration: none;    
+  
+  font-size: 14px;
+  background-color: #483D3F;
+  border: none;
+  border-radius: 8px;
+  font-family: poppins, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+  gap: 12px;
+  color: #F4EBD9;
+}
+
+.button-row .button-style:hover {
+  background-color: #F4EBD9;
+  border: 2px solid #483D3F;
+  color: #483D3F;
+  transform: translateY(-2px);
+  box-shadow: inset 0px 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
+
+.info-tab h1 {
+  color: #483D3F;
+  font-size: 40px;
+  margin-top: 15px; 
+  margin-bottom: 0; 
+}
+
+.info-tab .icon-style {
+  position: absolute; 
+  top: 0px; 
+  right: 0px; 
+  width: 150px; 
+  height: auto;
+  object-fit: contain;
+  
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4)); 
+}
+
+.content-row .button-tab.active .columnContent h2 {
+  color: #F4EBD9;
+  transition: color 0.2s ease;
+  margin-top: 0;  
+  margin-bottom: 0; 
+}
+
+.content-row .button-tab.active .columnContent p {
+  color: #F4EBD9;
+  transition: color 0.2s ease; 
+  margin-top: 0;  
+}
+
+
+
+/* ================= GALLERY STYLING ================= */
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.gallery-item {
+  height: 300px;
+  max-width: 100%;
+  flex-grow: 1;
+  object-fit: cover; 
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* ================= LIGHTBOX MODAL ================= */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(20, 15, 16, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Subtle Fade In */
+  opacity: 0;
+  animation: fadeInOverlay 0.2s forwards ease-out;
+}
+
+.lightbox-content-wrapper {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Subtle Scale Up */
+  transform: scale(0.95);
+  animation: scaleUpMedia 0.2s forwards ease-out;
+}
+
+.lightbox-media {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Keyframes for subtle entrance */
+@keyframes fadeInOverlay {
+  to { opacity: 1; }
+}
+
+@keyframes scaleUpMedia {
+  to { transform: scale(1); }
+}

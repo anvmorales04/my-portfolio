@@ -4,16 +4,18 @@
   background-color: #F4EBD9;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  position: 0 0;
   z-index: 10;
-  
 
+  position: fixed; 
+  top: -350px;         
+  left: -500px;
+  
   overflow: hidden;
   border: 1px solid #483D3F;
 
-  width: 50vw;       
+  width: 850px;       
   min-width: 400px;  
-  height: 70vh;    
+  height: 500px;    
   min-height: 350px;    
 
   display: flex;
@@ -50,7 +52,6 @@
 
 .content-square:hover {
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4); 
-  
   transform: translateY(-2px); 
 }
 
@@ -78,7 +79,6 @@
   overflow-y: auto;
   background-color: #483D3F;
   
-
   box-sizing: border-box;
   border-radius: 8px;
 
@@ -90,17 +90,13 @@
 
 .text-box:hover {
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4); 
-  
   transform: translateY(-2px); 
 }
-
 
 .text-box p {
   color: #F4EBD9;
   margin-top: 0;
 }
-
-
 
 .bullet-point-row {
   display: flex;
@@ -108,7 +104,6 @@
   gap: 15px;     
   margin-top: 15px;      
 }
-
 
 .bullet-point-row p {
   margin: 0;
@@ -119,7 +114,7 @@
   display: flex;
   align-items: flex-start; 
   justify-content: flex-start;
-  gap: 20px;
+  gap: 15px;
   margin-top: 5px;   
   align-self: center;      
 }
@@ -130,7 +125,6 @@
   overflow: visible; 
   padding: 5px 0 0 0;
   
-
   display: flex;
   flex-direction: column; 
   gap: 10px;              
@@ -138,10 +132,7 @@
 
   transition: all 0.2s ease;   
   border: 2px solid transparent;  
-
-  border-radius: 8px;
-  
-
+  border-radius: 6px;
 }
 
 .content-row .columnContent:hover {
@@ -160,16 +151,15 @@
   margin-bottom: 4px;
   font-weight: bold;
   align-self: center;       
+  font-size: 20px;
 }
 
 .content-row .columnContent .image-container {
-  width: 100px;                   
-  height: 100px;            
+  width: 75px;                     
+  height: 75px;            
   object-fit: contain;
   align-self: center; 
 }
-
-
 
 .content-row .telephone-booth {
   width: 30%;             
@@ -182,21 +172,16 @@
   display: flex;
   justify-content: space-between; 
   gap: 15px;                      
-  margin-top: 5px;             
+  margin-top: 5px;            
   width: 100%;
 
   background-color: transparent;
   border: 2px solid rgba(0, 0, 0, 0.4); 
   border-radius: 8px;
-  transition: all 0.2s ease;  
+  transition: all 0.2s ease;   
 
   margin-bottom: 10px;
-  
-  
 }
-
-
-
 
 .content-row .button-tab .columnContent {
   flex: 1;                       
@@ -217,8 +202,7 @@
 .content-row .button-tab .columnContent h2 {
   color: #483D3F;
   font-weight: bold;
-  text-align: left;      
-  
+  text-align: left;       
   align-self: flex-start; 
 }
 
@@ -226,23 +210,14 @@
   color: #483D3F;
   margin-top: 0;
   text-align: left;
-
   align-self: flex-start;       
 }
-
-
-
-
 
 .content-row .button-tab:hover {
   background-color: rgba(72, 61, 63, 0.05);
   border: 2px solid rgba(72, 61, 63, 0.2);
   transform: translateY(-2px);         
 }
-
-
-
-
 
 a.columnContent {
   text-decoration: none;
@@ -252,7 +227,6 @@ a.columnContent h2 {
   text-decoration: none !important; 
   color: inherit;
 }
-
 
 @keyframes ringShake {
   0% { transform: rotate(0deg) translate(0, 0); }
@@ -267,23 +241,15 @@ a.columnContent h2 {
   max-width: 300px;     
   height: 50vh;     
   object-fit: contain;
-}
-
-.content-row .telephone-booth:hover {
   animation: ringShake 0.3s ease-in-out 8;
   cursor: pointer; 
 }
 
-
-
 .content-row .info-content {
-  flex: 1;             
+  flex: 1;            
   padding: 0;    
   overflow: visible; 
 }
-
-
-
 
 .bullet-points {
   color: #F4EBD9;
@@ -295,8 +261,6 @@ a.columnContent h2 {
   
   line-height: 0.6;    
   margin-top: 5px;     
-
-
 }
 
 .bullet-points .icon-pic {
@@ -306,18 +270,18 @@ a.columnContent h2 {
   vertical-align: middle;
 }
 
-
 .window-controls .btn.close {
-  width: auto;      
+  width: auto;       
   min-width: 0;         
   padding: 0 4px;       
   line-height: 1;       
   background: transparent; 
   border: none;
   cursor: pointer;
-  font-family: var(--mono); 
+  font-family: monospace; 
+  color: #F4EBD9;
+  font-size: 16px;
 }
-
 
 .window-controls .btn.close:hover {
   background-color: rgba(222, 0, 0, 0.29); 
@@ -338,7 +302,7 @@ a.columnContent h2 {
 .title-bar .icon-topbar {
   width: 30px;          
   height: 30px;         
-  margin-right: 8px;     
+  margin-right: 8px;    
   object-fit: contain;   
   vertical-align: middle; 
 }
@@ -346,9 +310,6 @@ a.columnContent h2 {
 .window-entrance {
   animation: windowPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
-
-
-
 
 .side-by-side {
   display: flex;
@@ -358,11 +319,9 @@ a.columnContent h2 {
   gap: 15px;               
 }
 
-
 .side-by-side p {
   margin: 0; 
 }
-
 
 /*==================ABOUT ME STYLING===================================*/
 .profile-header {
@@ -372,17 +331,14 @@ a.columnContent h2 {
   margin-bottom: 30px;
 }
 
-
 .profile-avatar {
   width: 200px;      
   height: 200px;    
   border-radius: 50%; 
   object-fit: cover;   
   object-position: 50% 20%;
-
   border: 5px solid #483D3F; 
 }
-
 
 .profile-info {
   display: flex;
@@ -390,24 +346,19 @@ a.columnContent h2 {
   line-height: 1; 
 }
 
-
 .profile-info h1 {
   font-size: 40px;
   color: #483D3F;
   font-weight: 600;
-
   margin: 0 0 5px 0;
 }
 
 .profile-info h2 {
-  
   font-size: 30px;
   font-weight: bold;
   color: #483D3F;
   line-height: .1;
 } 
-
-
 
 .profile-info h4, 
 .profile-info p {
@@ -429,7 +380,6 @@ a.columnContent h2 {
   color: #1e293b;
 }
 
-
 .space-between-header {
   display: flex;
   justify-content: space-between; 
@@ -444,3 +394,67 @@ a.columnContent h2 {
   text-align: right;   
 }
 
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+@media (max-width: 850px) {
+
+  .react-draggable {
+    transform: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+  }
+
+.tab-window {
+  font-family: 'Poppins', sans-serif;
+  background-color: #F4EBD9;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+
+  
+  overflow: hidden;
+  border: 1px solid #483D3F;
+
+  width: 850px;       
+  min-width: 400px;  
+  height: 500px;    
+  min-height: 350px;    
+
+  display: flex;
+  flex-direction: column; 
+}
+
+  /* ENSURES CLOSE BUTTON STAYS VISIBLE ON MOBILE FOR ALL TABS */
+  .tab-window .window-controls .btn.close {
+    display: block !important;
+  }
+
+  .content-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .content-row .telephone-booth {
+    display: none;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-avatar {
+    width: 150px;
+    height: 150px;
+  }
+
+  .window-content-tab {
+    padding: 20px;
+  }
+
+}

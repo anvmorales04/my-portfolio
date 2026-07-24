@@ -40,10 +40,9 @@ import g13 from '../assets/gallery/graphic/g13.jpg';
 import g14 from '../assets/gallery/graphic/g14.jpg';
 import g15 from '../assets/gallery/graphic/g15.jpg';
 
-
 import podIcon from '../assets/podIcon.png';
 
-export default function Projects({ isOpen, onClose }) {
+export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
   const nodeRef = useRef(null); 
   const [activeTab, setActiveTab] = useState(1);
   const [selectedMedia, setSelectedMedia] = useState(null);
@@ -93,7 +92,6 @@ export default function Projects({ isOpen, onClose }) {
       { id: 13, type: 'image', src: g13 },
       { id: 14, type: 'image', src: g14 },
       { id: 15, type: 'image', src: g15 }
-
     ], []);
 
   const projectsData = useMemo(() => [
@@ -104,7 +102,6 @@ export default function Projects({ isOpen, onClose }) {
       content: (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {/*Technofitness */}
           <div className="project-square">
             <div className="info-tab" style={{ position: 'relative' }}>
               <img 
@@ -154,18 +151,6 @@ export default function Projects({ isOpen, onClose }) {
                     <line x1="10" y1="14" x2="21" y2="3"></line>
                   </svg>
                 </a>
-
-                {/*
-                <a href='https://drive.google.com/file/d/16e9XR8OqWANrxFayBqbGxDqH4kO1uvgI/view?usp=sharing' target="_blank" rel="noopener noreferrer" className="button-style">
-                  View Software&nbsp;&nbsp;
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
-                */}
-
               </div>
 
               <div className="gallery-container">
@@ -297,7 +282,7 @@ export default function Projects({ isOpen, onClose }) {
               <img 
                 className="icon-style"
                 src={podIcon} 
-                alt="Techno Fitness Logo" 
+                alt="Podcast Logo" 
                 style={{ 
                   position: 'absolute', 
                   top: '0px', 
@@ -391,7 +376,7 @@ export default function Projects({ isOpen, onClose }) {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowFullScreen>
-              </iframe>
+            </iframe>
           </div>
 
           <div className="project-square"> 
@@ -423,7 +408,7 @@ export default function Projects({ isOpen, onClose }) {
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 allowFullScreen>
-              </iframe>
+            </iframe>
           </div>
 
           <div className="project-square"> 
@@ -488,7 +473,6 @@ export default function Projects({ isOpen, onClose }) {
               </iframe>
           </div>
 
-
         </div>
       )
     },
@@ -502,7 +486,7 @@ export default function Projects({ isOpen, onClose }) {
           <div className="project-square">
             <div className="info-tab" style={{ position: 'relative' }}>
               
-              <h1>Gallery</h1>    
+              <h1>Gallery</h1>   
 
               <div className="gallery-container">
                 {galleryPubli.map((media) => (
@@ -529,23 +513,24 @@ export default function Projects({ isOpen, onClose }) {
                 ))}
               </div> 
 
-
             </div>
           </div>
 
         </div>
       )
     }
-  ], [galleryTechno, galleryEngi]);
+  ], [galleryTechno, galleryEngi, galleryPubli]);
 
   if (!isOpen) return null;
 
   const handleClose = () => {
-    try {
-      const sound = new Audio(closeAudio);
-      sound.play();
-    } catch (e) {
-      console.log("No close sound found");
+    if (localStorage.getItem('isGlobalMuted') !== 'true') {
+      try {
+        const sound = new Audio(closeAudio);
+        sound.play();
+      } catch (e) {
+        console.log("No close sound found");
+      }
     }
     
     setTimeout(() => {
@@ -553,27 +538,23 @@ export default function Projects({ isOpen, onClose }) {
     }, 100);
   };
 
-  const handleLinkHover = () => {
-    try {
-      const sound = new Audio(hoverAudio);
-      sound.volume = 0.5; 
-      sound.play();
-    } catch (e) {
-      console.log("Hover sound failed:", e);
-    }
-  };
-
   const handleLinkClick = (id) => {
-    try {
-      const sound = new Audio(clickAudio);
-      sound.play();
-    } catch (e) {
-      console.log("Click sound failed:", e);
+    if (localStorage.getItem('isGlobalMuted') !== 'true') {
+      try {
+        const sound = new Audio(clickAudio);
+        sound.play();
+      } catch (e) {
+        console.log("Click sound failed:", e);
+      }
     }
+
     setActiveTab(id);
   };
 
   const currentProject = projectsData.find(proj => proj.id === activeTab);
+
+  const startX = (window.innerWidth / 2) - 400; 
+  const startY = (window.innerHeight / 2) - 300;
 
   return (
     <>
@@ -581,10 +562,16 @@ export default function Projects({ isOpen, onClose }) {
         nodeRef={nodeRef} 
         handle=".title-bar" 
         cancel=".close" 
-        defaultPosition={{x: 50, y: 50}}>
-        
-        <div ref={nodeRef} style={{ position: 'absolute', zIndex: 10 }}>
-          <div className="os-window tab-window window-entrance">
+        defaultPosition={{x: startX, y: startY}}
+        bounds="body"
+        onMouseDown={onFocus}
+      >
+        <div 
+          ref={nodeRef} 
+          className="tab-window"
+          style={{ position: 'absolute', top: 0, left: 0, zIndex: zIndex }} 
+        >
+          <div className="window-entrance" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div className="title-bar">
               <div className="side-by-side">
                 <img className='icon-topbar' src={projectsImg} alt="Projects" />
@@ -601,8 +588,7 @@ export default function Projects({ isOpen, onClose }) {
                   <button 
                     key={project.id}
                     className={`button-tab ${activeTab === project.id ? 'active' : ''}`}
-                    onClick={() => handleLinkClick(project.id)}
-                    onMouseEnter={handleLinkHover}>
+                    onClick={() => handleLinkClick(project.id)}>
                     <div className="columnContent">
                       <h2>{project.title}</h2>
                       <p>{project.shortDesc}</p>

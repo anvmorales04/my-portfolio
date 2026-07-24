@@ -13,7 +13,7 @@
 .mini-page-content {
   animation: pageTransition 0.4s ease-out forwards;
   padding: 10px 0;
-    gap: 0;   
+  gap: 0;   
 }
 
 .mini-page-content h2 {
@@ -30,7 +30,7 @@
 
 
 .project-square{
-  padding: 20px;
+  padding: 25px;
   flex-grow: 1;
   background-color: rgba(163, 154, 146, 0.2);
   border-radius: 8px;
@@ -107,7 +107,7 @@
 
 .button-row .button-style {
   flex: 1; 
-  padding: 8px 16px;
+
   height: 50px;
   
 
@@ -245,4 +245,20 @@
 
 @keyframes scaleUpMedia {
   to { transform: scale(1); }
+}
+
+
+@media (max-width: 850px) {
+  
+  /* 1. Shrink the absolute positioned icons */
+  .info-tab .icon-style {
+    display: none
+  }
+
+  /* 2. Prevent the title from overlapping the icon */
+  .info-tab h1 {
+    font-size: 32px;    
+  }
+
+  
 }

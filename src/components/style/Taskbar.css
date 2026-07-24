@@ -61,4 +61,64 @@
   color: #F4EBD9;       
   transform: translateY(1vh); /* ADDED: Pushes the name slightly closer to the bottom of the screen */
   opacity: 0.8;              /* OPTIONAL: Dims the copyright slightly to make it look sleeker */
+
+  margin-bottom: 5px;
 }
+
+
+/* Keeps the Home button and Mute button grouped on the left */
+.taskbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Adds a nice space between the Home and Mute button */
+}
+
+
+.mute-icon {
+  width: 26px; 
+  height: auto;
+  object-fit: contain;
+  background-color: transparent;
+}
+
+.mute-button {
+  background-color: transparent;
+  border: none;               
+  cursor: pointer;      
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; 
+}
+
+.mute-button:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.mute-button.shake {
+  animation: shakeAnimation 0.3s ease-in-out;
+}
+
+@keyframes shakeAnimation {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+  75% { transform: rotate(-15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@media (max-width: 850px) {
+  .taskbar {
+    display: none !important; 
+  }
+}
+
+
+
+@media (max-width: 850px) {
+  .taskbar {
+    display: none !important; 
+  }
+}
+

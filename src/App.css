@@ -11,11 +11,14 @@ A39A92 - light gray/brown
 
 /* root */
 html, body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden; 
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  font-size: 16px !important;
+  overflow: hidden !important;
+  zoom: 1 !important;
+  transform: scale(1) !important;
 }
 
 * {
@@ -80,7 +83,6 @@ h2 {
 }
 
 
-/* 1. The Desktop Background */
 .desktop-environment {
   display: flex;           
   justify-content: center; 
@@ -110,5 +112,104 @@ h2 {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+
+.mobile-warning-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(20, 15, 16, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.mobile-warning-box {
+  background-color: #F4EBD9;
+  border: 1px solid #483D3F;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 350px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  font-family: 'Poppins', sans-serif;
+  animation: popIn 0.3s ease-out forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.mobile-warning-box .title-bar {
+  background-color: #483D3F;
+  padding: 10px 15px;
+  color: #F4EBD9;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.mobile-warning-box .warning-content {
+  padding: 25px;
+  text-align: center;
+  color: #483D3F;
+}
+
+.mobile-warning-box .warning-content p {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.mobile-warning-box .warning-content button {
+  background-color: #483D3F;
+  color: #F4EBD9;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  transition: transform 0.1s ease;
+}
+
+.mobile-warning-box .warning-content button:active {
+  transform: scale(0.95);
+}
+
+/* --- VIEW COUNTER STYLES --- */
+.view-counter-container {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  background-color: rgba(72, 61, 63, 0.4);
+  border: 2px solid rgba(72, 61, 63, 0.8);
+  color: #F4EBD9;
+  padding: 10px 15px;
+  border-radius: 8px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  
+  z-index: 5; 
+}
+
+@media (max-width: 850px) {
+  .view-counter-container {
+    z-index: 15; 
+    bottom: 20px;
+    margin-bottom: 20px;
   }
 }

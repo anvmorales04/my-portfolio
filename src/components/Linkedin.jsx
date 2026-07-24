@@ -8,21 +8,22 @@ import linkedInImg from '../assets/linkedin_tb.png';
 export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
   const nodeRef = useRef(null); 
 
+  // 1. We leave the dependency array empty [] so the script only loads ONCE
   useEffect(() => {
-    if (isOpen) {
-      const script = document.createElement('script');
-      script.src = "https://widgets.sociablekit.com/linkedin-profile-posts/widget.js";
-      script.async = true;
-      script.defer = true;
-      document.body.appendChild(script);
+    const script = document.createElement('script');
+    script.src = "https://widgets.sociablekit.com/linkedin-profile-posts/widget.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
 
-      return () => {
+    return () => {
+      if (document.body.contains(script)) {
         document.body.removeChild(script);
-      };
-    }
-  }, [isOpen]);
+      }
+    };
+  }, []);
 
-  if (!isOpen) return null;
+  // 2. We REMOVED "if (!isOpen) return null;" so the DOM node survives being closed
 
   const handleClose = () => {
     if (localStorage.getItem('isGlobalMuted') !== 'true') {
@@ -49,8 +50,11 @@ export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
     >
       <div 
         ref={nodeRef} 
-        style={{ position: 'absolute', zIndex: zIndex }} 
-        bounds="body"
+        style={{ 
+          position: 'absolute', 
+          zIndex: zIndex,
+          display: isOpen ? 'block' : 'none' // 3. We use CSS to hide/show the window!
+        }} 
         onMouseDown={onFocus} 
       >
 

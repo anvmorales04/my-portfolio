@@ -8,7 +8,6 @@ import Linkedin from './components/Linkedin';
 import ViewCounter from './ViewCounter';
 import './App.css';
 
-
 function App() {
   const [isHomeOpen, setIsHomeOpen] = useState(true);
 
@@ -28,7 +27,6 @@ function App() {
   });
 
   const [topZ, setTopZ] = useState(11);
-
   const [showMobileWarning, setShowMobileWarning] = useState(false);
 
   useEffect(() => {
@@ -63,6 +61,23 @@ function App() {
 
   return (
     <div className="desktop-environment">
+      
+      {/* MOBILE WARNING POP-UP */}
+      {showMobileWarning && (
+        <div className="mobile-warning-overlay">
+          <div className="mobile-warning-modal">
+            <div className="title-bar">
+              <span>System Notice</span>
+              <button className="close" onClick={() => setShowMobileWarning(false)}>X</button>
+            </div>
+            <div className="warning-content">
+              <p>For the best experience, try opening the website in a desktop (PC).</p>
+              <button onClick={() => setShowMobileWarning(false)}>Continue Anyway</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Placed first in the DOM & given a lower z-index so it loads in the background */}
       <Linkedin 
         isOpen={openWindows.linkedin} 

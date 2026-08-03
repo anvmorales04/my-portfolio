@@ -106,7 +106,7 @@
   100% { transform: rotate(0deg); }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 975px) {
   .taskbar {
     display: none !important; 
   }
@@ -117,7 +117,7 @@
 /* =========================================
    MOBILE RESPONSIVENESS (BOTTOM BAR)
 ========================================= */
-@media (max-width: 850px) {
+@media (max-width: 975px) {
   .taskbar {
     display: flex !important;
     justify-content: space-evenly !important;

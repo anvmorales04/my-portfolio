@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './style/Taskbar.css';
-import clickSound from '../assets/audio/tab_open.wav';
-import closeSound from '../assets/audio/tab_close.wav'; // ADDED: Import close sound
 import audioOFF from '../assets/OFF_audio.png';
 import audioON from '../assets/ON_audio.png';
 import audio_ON from '../assets/audio/ON-audio.mp3';
 import audio_OFF from '../assets/audio/OFF-audio.mp3';
 import linkedIn from '../assets/linkedin_tb.png';
+import clickBtn from '../assets/audio/click-btn.mp3';
 
-// ADDED: isHomeOpen to the props list
 export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
   const [currentTime, setCurrentTime] = useState(new Date());
-  
   const [isShaking, setIsShaking] = useState(false);
-  
   const [isMuted, setIsMuted] = useState(() => {
     return localStorage.getItem('isGlobalMuted') === 'true';
   });
@@ -58,9 +54,7 @@ export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
   const handleHomeClick = () => {
     if (!isMuted) {
       try {
-        // UPDATED: Choose the sound based on whether the window is currently open
-        const soundToPlay = isHomeOpen ? closeSound : clickSound;
-        const audio = new Audio(soundToPlay);
+        const audio = new Audio(clickBtn);
         audio.play();
       } catch(e) {
         console.log("Audio failed", e);
@@ -75,7 +69,7 @@ export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
   const handleLinkedInClick = () => {
     if (!isMuted) {
       try {
-        const audio = new Audio(clickSound);
+        const audio = new Audio(clickBtn);
         audio.play();
       } catch(e) {
         console.log("Audio failed", e);

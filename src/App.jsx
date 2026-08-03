@@ -5,6 +5,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Linkedin from './components/Linkedin';
+import DotField from './components/DotField'; 
 import './App.css';
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     about: false,
     projects: false,
     contact: false,
-    linkedin: true,
+    linkedin: true, 
   });
 
   const [zIndices, setZIndices] = useState({
@@ -58,16 +59,17 @@ function App() {
     });
   };
 
-  // --- HOME TASKBAR CLICK HANDLER ---
-  const handleHomeTaskbarClick = () => {
+const handleHomeTaskbarClick = () => {
     if (window.innerWidth <= 850) {
-      // MOBILE: Open and bring to front. If already open, do nothing.
       setIsHomeOpen(true);
       bringToFront('home');
     } else {
-      // DESKTOP: Toggle open/close (close if open, open & bring to front if closed)
       if (isHomeOpen) {
-        setIsHomeOpen(false);
+        if (zIndices.home === topZ) {
+          setIsHomeOpen(false);
+        } else {
+          bringToFront('home'); 
+        }
       } else {
         setIsHomeOpen(true);
         bringToFront('home');
@@ -75,16 +77,17 @@ function App() {
     }
   };
 
-
   const handleLinkedinTaskbarClick = () => {
     if (window.innerWidth <= 850) {
-      // Mobile view: Open and bring to front without closing on repeat taps
       setOpenWindows(prev => ({ ...prev, linkedin: true }));
       bringToFront('linkedin');
     } else {
-      // Desktop view: Toggle open/close
       if (openWindows.linkedin) {
-        setOpenWindows(prev => ({ ...prev, linkedin: false }));
+        if (zIndices.linkedin === topZ) {
+          setOpenWindows(prev => ({ ...prev, linkedin: false }));
+        } else {
+          bringToFront('linkedin'); 
+        }
       } else {
         setOpenWindows(prev => ({ ...prev, linkedin: true }));
         bringToFront('linkedin');
@@ -95,7 +98,18 @@ function App() {
   return (
     <div className="desktop-environment">
       
-      {/* MOBILE WARNING POP-UP */}
+      <DotField
+        dotRadius={2}
+        dotSpacing={16}
+        bulgeStrength={60}
+        glowRadius={250}
+        sparkle={true} 
+        waveAmplitude={0}
+        gradientFrom="#77685D"
+        gradientTo="#483D3F" 
+        glowColor="rgba(244, 235, 217, 0.15)" 
+      />
+
       {showMobileWarning && (
         <div className="mobile-warning-overlay">
           <div className="mobile-warning-modal">
@@ -110,14 +124,6 @@ function App() {
           </div>
         </div>
       )}
-
-      {/* Placed first in the DOM & given a lower z-index so it loads in the background */}
-      <Linkedin 
-        isOpen={openWindows.linkedin} 
-        onClose={() => closeWindow('linkedin')}
-        zIndex={zIndices.linkedin}
-        onFocus={() => bringToFront('linkedin')}
-      />
 
       <Window 
         isOpen={isHomeOpen} 
@@ -148,6 +154,13 @@ function App() {
         onClose={() => closeWindow('contact')}
         zIndex={zIndices.contact}
         onFocus={() => bringToFront('contact')}
+      />
+
+      <Linkedin 
+        isOpen={openWindows.linkedin} 
+        onClose={() => closeWindow('linkedin')}
+        zIndex={zIndices.linkedin}
+        onFocus={() => bringToFront('linkedin')}
       />
 
       <Taskbar 

@@ -248,14 +248,12 @@
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 975px) {
   
-  /* 1. Shrink the absolute positioned icons */
   .info-tab .icon-style {
     display: none
   }
 
-  /* 2. Prevent the title from overlapping the icon */
   .info-tab h1 {
     font-size: 32px;    
   }

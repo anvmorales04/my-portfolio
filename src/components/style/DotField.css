@@ -1,0 +1,16 @@
+.dot-field-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none; /* Allows you to click your windows over the background! */
+}
+
+@media (max-width: 975px) {
+  .dot-field-container {
+    display: none;
+  }
+}

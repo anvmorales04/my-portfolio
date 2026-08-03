@@ -83,23 +83,37 @@ h2 {
 }
 
 
+/* Update your main container */
 .desktop-environment {
-  display: flex;           
-  justify-content: center; 
-  align-items: center;     
-  position: relative;      
-  overflow: hidden;        
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #141011;
+}
+
+.background-beams-container {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
   
-  background: linear-gradient(135deg, #058ED9, #ffffff);
-  background-size: 400% 400%;
-  animation: gradientShift 15s ease infinite;
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.background-beams-svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
   
-  color: var(--text-primary);
-  
-  width: 100vw;      /* Exactly 100% of the browser's width */
-  height: 100vh;     /* Strictly 100% of the browser's height */
-  margin: 0;         /* Ensures no invisible borders push it off-center */
-  padding: 0;
+  transform: translateZ(0);
 }
 
 /* Animation instructions for the gradient background */

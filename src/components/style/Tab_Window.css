@@ -584,7 +584,7 @@ a.columnContent h2 {
 /* =========================================
    MOBILE RESPONSIVENESS
 ========================================= */
-@media (max-width: 850px) {
+@media (max-width: 975px) {
 
   .react-draggable {
     transform: none !important;
@@ -611,6 +611,8 @@ a.columnContent h2 {
 
     display: flex;
     flex-direction: column; 
+
+    backface-visibility: hidden;
 
   }
 

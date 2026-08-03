@@ -5,7 +5,6 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Linkedin from './components/Linkedin';
-import ViewCounter from './ViewCounter';
 import './App.css';
 
 function App() {
@@ -57,6 +56,40 @@ function App() {
       contact: false,
       linkedin: false,
     });
+  };
+
+  // --- HOME TASKBAR CLICK HANDLER ---
+  const handleHomeTaskbarClick = () => {
+    if (window.innerWidth <= 850) {
+      // MOBILE: Open and bring to front. If already open, do nothing.
+      setIsHomeOpen(true);
+      bringToFront('home');
+    } else {
+      // DESKTOP: Toggle open/close (close if open, open & bring to front if closed)
+      if (isHomeOpen) {
+        setIsHomeOpen(false);
+      } else {
+        setIsHomeOpen(true);
+        bringToFront('home');
+      }
+    }
+  };
+
+
+  const handleLinkedinTaskbarClick = () => {
+    if (window.innerWidth <= 850) {
+      // Mobile view: Open and bring to front without closing on repeat taps
+      setOpenWindows(prev => ({ ...prev, linkedin: true }));
+      bringToFront('linkedin');
+    } else {
+      // Desktop view: Toggle open/close
+      if (openWindows.linkedin) {
+        setOpenWindows(prev => ({ ...prev, linkedin: false }));
+      } else {
+        setOpenWindows(prev => ({ ...prev, linkedin: true }));
+        bringToFront('linkedin');
+      }
+    }
   };
 
   return (
@@ -117,12 +150,10 @@ function App() {
         onFocus={() => bringToFront('contact')}
       />
 
-      <ViewCounter />
-
       <Taskbar 
-        onHomeClick={() => setIsHomeOpen(!isHomeOpen)} 
-        onLinkedInClick={() => openWindow('linkedin')} 
-        zIndex={zIndices.home}             
+        onHomeClick={handleHomeTaskbarClick} 
+        onLinkedInClick={handleLinkedinTaskbarClick} 
+        zIndex={zIndices.home}                    
         onFocus={() => bringToFront('home')} 
         isHomeOpen={isHomeOpen}
       />

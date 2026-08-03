@@ -92,19 +92,19 @@ export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
       
       <div className="taskbar-left">
         <button className="start-button" onClick={handleHomeClick}>
-          ⊞ Home
+          ⊞ <span className="home-text">Home</span>
         </button>
         
-        <button className="mute-button" onClick={handleLinkedInClick} title="LinkedIn">
+        <button className="mute-button linkedin-button" onClick={handleLinkedInClick} title="LinkedIn">
           <img 
             src={linkedIn} 
             alt="LinkedIn" 
-            className="mute-icon" 
+            className="mute-icon"
           />
         </button>
 
         <button 
-            className={`mute-button ${isShaking ? 'shake' : ''}`} 
+            className={`mute-button audio-button ${isShaking ? 'shake' : ''}`} 
             onClick={handleToggleMute} 
             title={isMuted ? "Unmute" : "Mute"}
           >

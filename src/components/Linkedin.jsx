@@ -8,7 +8,6 @@ import linkedInImg from '../assets/linkedin_tb.png';
 export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
   const nodeRef = useRef(null); 
 
-  // 1. We leave the dependency array empty [] so the script only loads ONCE
   useEffect(() => {
     const script = document.createElement('script');
     script.src = "https://widgets.sociablekit.com/linkedin-profile-posts/widget.js";
@@ -22,8 +21,6 @@ export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
       }
     };
   }, []);
-
-  // 2. We REMOVED "if (!isOpen) return null;" so the DOM node survives being closed
 
   const handleClose = () => {
     if (localStorage.getItem('isGlobalMuted') !== 'true') {
@@ -68,10 +65,11 @@ export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
               <span className="title">LinkedIn Activity</span>
             </div>
             <div className="window-controls">
+
+              
               <button 
                 className="btn close" 
-                onClick={handleClose}
-              >
+                onClick={handleClose}>
                 [ x ]
               </button>
             </div>

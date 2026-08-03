@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-/* 3. The Taskbar Styling (25% Height Panel) */
 .taskbar {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 12vh; /* Exactly 25% of the window's height */
+  height: 85px;
   
   background-color: rgba(72, 61, 63, 1); 
   backdrop-filter: blur(10px); 
@@ -14,24 +13,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1.5vw; /* Scales padding based on width */
+  padding: 0 1.5vw;
   box-sizing: border-box;
 }
 
-/* Scaled down components to comfortably fit the 8vh taskbar */
 .start-button {
   background-color: transparent;
   color: white;
   border: none;
-  padding: 1vh 1.5vw; /* Reduced padding for breathing room */
-  font-size: 2.5vh;   /* Scaled down the font */
+  padding: 25px 10px;
+  font-size: 20px; 
   cursor: pointer;
   border-radius: 6px;
-  transition: background-color 0.2s ease; /* Adds a smooth fade on hover */
+  transition: background-color 0.2s ease; 
 }
 
 .start-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(47, 22, 22, 0.1);
   
 }
 
@@ -41,23 +39,23 @@
   flex-direction: column;    /* Stacks the time and date vertically */
   align-items: flex-end;     /* Aligns them strictly to the right */
   justify-content: center;
-  gap: 1px;                  /* Keeps Time and Date close together */
+  gap: 0px;                  /* Keeps Time and Date close together */
 }
 
 .time {
-  font-size: 2vh; 
-  margin-top: 1vh;   
+  font-size: 16px; 
+  margin-top: 10px;   
   color: #F4EBD9;            /* Changes specifically the time color */
 }
 
 .date {
-  font-size: 1.7vh;          /* Makes the date slightly smaller than the time */
+  font-size: 14px;          /* Makes the date slightly smaller than the time */
   color: #F4EBD9; 
 
 }
 
 .small-text {
-  font-size: 1.5vh;          /* Even smaller text for additional info */
+  font-size: 12px;          /* Even smaller text for additional info */
   color: #F4EBD9;       
   transform: translateY(1vh); /* ADDED: Pushes the name slightly closer to the bottom of the screen */
   opacity: 0.8;              /* OPTIONAL: Dims the copyright slightly to make it look sleeker */
@@ -116,9 +114,60 @@
 
 
 
+/* =========================================
+   MOBILE RESPONSIVENESS (BOTTOM BAR)
+========================================= */
 @media (max-width: 850px) {
   .taskbar {
-    display: none !important; 
+    display: flex !important;
+    justify-content: space-evenly !important;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 70px; 
+    padding: 0;
+    z-index: 9999;
+  }
+
+  .system-tray {
+    display: none !important;
+  }
+
+  /* Unwraps the left container so Flexbox can target the individual buttons */
+  .taskbar-left {
+    display: contents; 
+  }
+
+  /* SEQUENCE 1: LinkedIn on the far left */
+  .linkedin-button { 
+    order: 1 !important; 
+  }
+
+  /* SEQUENCE 2: Home button perfectly in the middle */
+  .start-button {
+    order: 2 !important;
+    width: 55px; 
+    height: 55px;
+    border-radius: 50%; 
+    background-color: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* SEQUENCE 3: Mute toggle on the far right */
+  .audio-button {
+    order: 3 !important;
+  }
+
+  .home-text {
+    display: none;
   }
 }
-

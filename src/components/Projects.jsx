@@ -4,6 +4,7 @@ import './style/Tab_Window.css';
 import './style/Projects_Tabs.css';
 
 import closeAudio from '../assets/audio/tab_close.wav'; 
+import clickSound from '../assets/audio/tab_open.wav'; /* ADDED THIS */
 import projectsImg from '../assets/projects_light.png';
 import hoverAudio from '../assets/audio/hover.mp3';
 import clickAudio from '../assets/audio/click.wav';
@@ -46,6 +47,7 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
   const nodeRef = useRef(null); 
   const [activeTab, setActiveTab] = useState(1);
   const [selectedMedia, setSelectedMedia] = useState(null);
+  const [isMaximized, setIsMaximized] = useState(false); /* ADDED THIS */
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -538,6 +540,22 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
     }, 100);
   };
 
+  /* ADDED MAXIMIZE FUNCTION */
+  const handleMaximize = () => {
+    const nextMaximizedState = !isMaximized;
+    setIsMaximized(nextMaximizedState);
+
+    if (localStorage.getItem('isGlobalMuted') !== 'true') {
+      try {
+        const audioFile = nextMaximizedState ? clickSound : closeAudio;
+        const audio = new Audio(audioFile);
+        audio.play();
+      } catch (e) {
+        console.log("Audio failed to play:", e);
+      }
+    }
+  };
+
   const handleLinkClick = (id) => {
     if (localStorage.getItem('isGlobalMuted') !== 'true') {
       try {
@@ -553,22 +571,23 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
 
   const currentProject = projectsData.find(proj => proj.id === activeTab);
 
-  const startX = (window.innerWidth / 2) - 400; 
-  const startY = (window.innerHeight / 2) - 300;
+  const startX = (window.innerWidth / 2) - 500; 
+  const startY = (window.innerHeight / 2) - 320;
 
   return (
     <>
       <Draggable 
         nodeRef={nodeRef} 
         handle=".title-bar" 
-        cancel=".close" 
+        cancel=".close, .windowed" /* FIXED THIS */
         defaultPosition={{x: startX, y: startY}}
         bounds="body"
         onMouseDown={onFocus}
+        disabled={isMaximized} /* FIXED THIS */
       >
         <div 
           ref={nodeRef} 
-          className="tab-window"
+          className={`tab-window ${isMaximized ? 'maximized' : ''}`} /* FIXED THIS */
           style={{ position: 'absolute', top: 0, left: 0, zIndex: zIndex }} 
         >
           <div className="window-entrance" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -578,6 +597,14 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
                 <span className="title">Projects</span>
               </div>
               <div className="window-controls">
+                
+                {/* FIXED THIS: Added Maximize Button */}
+                <button 
+                  className="btn windowed" 
+                  onClick={handleMaximize}>
+                  {isMaximized ? '[ ▭ ]' : '[ ❐ ]'}
+                </button>
+
                 <button className="btn close" onClick={handleClose}>[ x ]</button>
               </div>
             </div>

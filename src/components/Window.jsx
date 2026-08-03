@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import Draggable from 'react-draggable';
 import './style/Window.css';
 
-
+import ViewCounter from './style/ViewCounter';
 
 import aboutImg from '../assets/about.png';
 import projectsImg from '../assets/projects.png';
@@ -11,6 +11,8 @@ import resumeImg from '../assets/resume.png';
 import clickSound from '../assets/audio/tab_open.wav';
 import closeAudio from '../assets/audio/tab_close.wav'; 
 import resumePdf from '../assets/Aryll-Nevin-Morales_Resume.pdf';
+
+
 
 export default function Window({ 
   isOpen, 
@@ -74,7 +76,6 @@ export default function Window({
   const startY = (window.innerHeight / 2) - 250;
 
   return (
-    
     <Draggable 
     nodeRef={nodeRef} 
     handle=".title-bar" 
@@ -101,8 +102,26 @@ export default function Window({
         </div>
 
         <div className="window-content">
-          <h3 className="spacing-tight">Developer | Engineer | Artist</h3>
-          <h1 className="spacing-normal">&gt; Aryll Nevin Morales</h1>
+          
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            marginBottom: '5px',
+            flexWrap: 'wrap-reverse', 
+            gap: '10px'
+          }}>
+            <h3 className="spacing-tight" style={{ margin: 0 }}>
+              Computer Engineer | Developer | Artist
+            </h3>
+            <ViewCounter />
+          </div>
+
+          <h1 className="spacing-normal" style={{ margin: '10px 0' }}>
+            &gt; Aryll Nevin Morales
+          </h1>
+
+
           <p>Computer Engineering graduate from De La Salle Lipa. I build and create things, bringing highly unique, out-of-the-box ideas to life.</p>
           <p>Welcome to my portfolio portal! <br/>
             Below you may select which tab you want to access. Happy browsing!</p>

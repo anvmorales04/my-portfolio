@@ -3,11 +3,13 @@ import Draggable from 'react-draggable';
 import './style/Tab_Window.css'; 
 
 import closeAudio from '../assets/audio/tab_close.wav'; 
+import clickSound from '../assets/audio/tab_open.wav'; /* ADDED THIS */
 import contactImg from '../assets/contacts_light.png';
 import telbooth from '../assets/telephone_booth.png';
 import ringSound from '../assets/audio/tel-ring.mp3'; 
 import telIcon from '../assets/tel-icon.png';
 import emailIcon from '../assets/email-icon.png';
+import clickBox from '../assets/audio/click-box.mp3';
 
 import linkedinIcon from '../assets/linkedin-icon.png';
 import githubIcon from '../assets/github-icon.png';
@@ -21,6 +23,7 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
   const fadeInterval = useRef(null);
 
   const [hasRung, setHasRung] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false); /* ADDED THIS */
 
   useEffect(() => {
     audioRef.current = new Audio(ringSound);
@@ -55,6 +58,21 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
     }, 100);
   };
 
+  const handleMaximize = () => {
+      const nextMaximizedState = !isMaximized;
+      setIsMaximized(nextMaximizedState);
+  
+      if (localStorage.getItem('isGlobalMuted') !== 'true') {
+        try {
+          const audioFile = nextMaximizedState ? clickSound : closeAudio;
+          const audio = new Audio(audioFile);
+          audio.play();
+        } catch (e) {
+          console.log("Audio failed to play:", e);
+        }
+      }
+    };
+
   const handlePhoneHover = () => {
     if (hasRung) return; 
     
@@ -67,21 +85,21 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
     }
   };
 
-  const handlePhoneLeave = () => {
+const handlePhoneLeave = () => {
     if (!audioRef.current) return;
     if (!hasRung) {
       setHasRung(true); 
     }
 
     fadeInterval.current = setInterval(() => {
-      if (audioRef.current.volume > 0.1) {
-        audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.1);
+      if (audioRef.current.volume > 0.05) {
+        audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.05);
       } else {
         audioRef.current.pause();
         audioRef.current.currentTime = 0; 
         clearInterval(fadeInterval.current);
       }
-    }, 100); 
+    }, 50); 
   };
 
   const handleLinkClick = () => {
@@ -93,32 +111,49 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
     }
   };
 
-  const startX = (window.innerWidth / 2) - 400; 
-  const startY = (window.innerHeight / 2) - 300;
+  const startX = (window.innerWidth / 2) - 500; 
+  const startY = (window.innerHeight / 2) - 320;
 
   return (
     <Draggable 
       nodeRef={nodeRef} 
       handle=".title-bar" 
-      cancel=".close" 
+      cancel=".close, .windowed"  /* FIXED THIS */
       defaultPosition={{x: startX, y: startY}}
       bounds="body"
       onMouseDown={onFocus}
+      disabled={isMaximized} /* FIXED THIS */
     >
       <div 
         ref={nodeRef} 
-        className="tab-window"
+        className={`tab-window ${isMaximized ? 'maximized' : ''}`} 
         style={{ position: 'absolute', top: 0, left: 0, zIndex: zIndex }} 
       >
-        <div className="window-entrance" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          
+          <div className="window-entrance" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            
           <div className="title-bar">
             <div className="side-by-side">
                 <img className='icon-topbar' src={contactImg} alt="Contact" />
                 <span className="title">Contact</span>
               </div>
+              
               <div className="window-controls">
-                <button className="btn close" onClick={handleClose}>[ x ]</button>
+
+                <button 
+                  className="btn windowed" 
+                  onClick={handleMaximize}>
+                  {isMaximized ? '[ ▭ ]' : '[ ❐ ]'}
+                </button>
+
+
+                <button 
+                  className="btn close" 
+                  onClick={handleClose}>
+                  [ x ]
+                </button>
               </div>
+
           </div>
 
           <div className="window-content">
@@ -131,45 +166,50 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
                 onMouseLeave={handlePhoneLeave}
               />
 
-              <div className="info-content">
-                <h2>Contact Me</h2>
+              <div className="info-content contact">
+                <h2>Contact</h2>
                 <p>You may contact me through these channels.</p>
 
-                <div className="bullet-point-row">
-                  <img className="bullet-point" src={emailIcon} alt="Email" />
-                  <div className="text-box"> 
-                    <p>aryll.nevin.morales@gmail.com</p>
-                  </div>
-                </div>
-                <hr />
+                
 
-                <h2>Links</h2>
-                <div className="content-row"> 
-                  
-                  {/* GitHub Link */}
+                <div className="contact-links-container"> 
+                  <a 
+                    href="mailto:aryll.nevin.morales@gmail.com" 
+                    className="contact-card clickable-link"
+                    onClick={handleLinkClick}
+                  >
+                    <img className="contact-icon" src={emailIcon} alt="Email" />
+                    <h2>Email</h2>
+                    <p>aryll.nevin.morales@gmail.com</p>
+                  </a>
+
                   <a 
                     href="https://github.com/anvmorales04" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="columnContent clickable-link"
+                    className="contact-card clickable-link"
                     onClick={handleLinkClick}
                   >
-                    <img className="image-container" src={githubIcon} alt="GitHub" />
-                    <h2>Github</h2>
+                    <img className="contact-icon" src={githubIcon} alt="GitHub" />
+                    <h2>GitHub</h2>
+                    <p>github.com/anvmorales04</p>
                   </a>
 
                   <a 
                     href="https://www.linkedin.com/in/aryll-nevin-morales-55b360323/" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="columnContent clickable-link"
+                    className="contact-card clickable-link"
                     onClick={handleLinkClick}
                   >
-                    <img className="image-container" src={linkedinIcon} alt="LinkedIn" />
+                    <img className="contact-icon" src={linkedinIcon} alt="LinkedIn" />
                     <h2>LinkedIn</h2>
+                    <p>linkedin.com/in/aryll-nevin-morales-55b360323</p>
                   </a>
                   
                 </div>
+
+
               </div>
             </div>
           </div>

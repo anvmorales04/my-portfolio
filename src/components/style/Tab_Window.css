@@ -1,6 +1,12 @@
 /*Tab_window */
-.tab-window {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Force Poppins on EVERYTHING inside the tab window */
+.tab-window, .tab-window * {
   font-family: 'Poppins', sans-serif;
+}
+
+.tab-window {
   background-color: #F4EBD9;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -37,8 +43,6 @@
 
 .content-square {
   padding: 20px;
-  flex-grow: 1;
-  overflow-y: auto;
   background-color: #77685D;
 
   box-sizing: border-box;
@@ -130,7 +134,7 @@
   gap: 10px;              
   align-self: center; 
 
-  transition: all 0.2s ease;   
+  transition: background-color 0.2s ease, border 0.2s ease, transform 0.2s ease;   
   border: 2px solid transparent;  
   border-radius: 6px;
 }
@@ -178,7 +182,7 @@
   background-color: transparent;
   border: 2px solid rgba(0, 0, 0, 0.4); 
   border-radius: 8px;
-  transition: all 0.2s ease;   
+  transition: background-color 0.2s ease, border 0.2s ease, transform 0.2s ease;   
 
   margin-bottom: 10px;
 }
@@ -191,9 +195,8 @@
   border-radius: 8px;
   cursor: pointer;
   
-  font-family: 'Poppins', sans-serif;
   color: #483D3F;
-  transition: all 0.2s ease;      
+  transition: background-color 0.2s ease, color 0.2s ease;      
 
   align-items: flex-start; 
   gap: 0px;
@@ -228,6 +231,13 @@ a.columnContent h2 {
   color: inherit;
 }
 
+.btn-selection {
+  border: 3px;
+  border-color: #483D3F;
+  background-color: #77685D;
+}
+
+
 @keyframes ringShake {
   0% { transform: rotate(0deg) translate(0, 0); }
   25% { transform: rotate(-3deg) translate(-2px, 0); }
@@ -255,7 +265,6 @@ a.columnContent h2 {
   color: #F4EBD9;
   text-decoration: none;
   transition: color 0.2s ease;
-  font-family: 'Poppins', sans-serif;
   font-weight: 1000;
   font-size: 64px;
   
@@ -278,13 +287,29 @@ a.columnContent h2 {
   background: transparent; 
   border: none;
   cursor: pointer;
-  font-family: monospace; 
+  color: #F4EBD9;
+  font-size: 16px;
+}
+
+.window-controls .btn.windowed {
+  width: auto;       
+  min-width: 0;         
+  padding: 0 4px;       
+  line-height: 1;       
+  background: transparent; 
+  border: none;
+  cursor: pointer;
   color: #F4EBD9;
   font-size: 16px;
 }
 
 .window-controls .btn.close:hover {
   background-color: rgba(222, 0, 0, 0.29); 
+  border-radius: 4px;
+}
+
+.window-controls .btn.windowed:hover {
+  background-color: rgba(215, 222, 0, 0.29); 
   border-radius: 4px;
 }
 
@@ -323,6 +348,81 @@ a.columnContent h2 {
   margin: 0; 
 }
 
+/* ==================================
+   CONTACT LINK CARDS
+   ================================== */
+.contact-links-container {
+  display: flex;
+  gap: 10px; /* Reduced from 15px to save space */
+  flex-wrap: wrap; 
+  margin-top: 10px;
+}
+
+/* Tighten the card padding */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  text-align: left;
+  
+  border: 2px solid #483D3F; 
+  background-color: rgba(72, 61, 63, 0.05); 
+  
+  padding: 10px 15px; /* Reduced vertical padding */
+  border-radius: 8px;
+  text-decoration: none;
+  
+  width: 100%;
+  flex-grow: 1;         
+  flex-basis: 180px;    /* Slightly smaller basis to ensure safe wrapping */
+  max-width: 100%;      
+  
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  background-color: rgba(72, 61, 63, 0.1); /* Slightly darker on hover */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card .contact-icon {
+  width: 50px;  
+  height: 50px; 
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+
+.contact-card h2 {
+  margin-bottom: 0;
+  font-size: 25px;
+  color: #483D3F;
+}
+
+.contact-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #483D3F;
+  opacity: 0.8;
+  word-break: break-all; 
+}
+
+.telephone-booth + .info-content h2 {
+  margin-bottom: 0;
+}
+
+.telephone-booth + .info-content p:first-of-type {
+  margin-top: 5px;
+}
+
+
+.info-tab h1, 
+.info-tab h2, 
+.info-tab h3 {
+  padding-right: 100px; 
+  word-wrap: break-word; 
+}
 /*==================ABOUT ME STYLING===================================*/
 .profile-header {
   display: flex;
@@ -333,21 +433,26 @@ a.columnContent h2 {
 
 .profile-avatar {
   width: 200px;      
+  min-width: none;
   height: 200px;    
+  min-height: none;
   border-radius: 50%; 
   object-fit: cover;   
   object-position: 50% 20%;
   border: 5px solid #483D3F; 
+  flex-shrink: 0;
 }
 
 .profile-info {
   display: flex;
+  gap: 5px;
   flex-direction: column;
   line-height: 1; 
 }
 
 .profile-info h1 {
-  font-size: 40px;
+  font-size: 75px;
+  font-weight: 600px;
   color: #483D3F;
   font-weight: 600;
   margin: 0 0 5px 0;
@@ -365,7 +470,6 @@ a.columnContent h2 {
   margin: 0;
   line-height: 1;
   color: #483D3F; 
-  font-family: 'Poppins', sans-serif;
 }
 
 .profile-info h4 {
@@ -394,6 +498,89 @@ a.columnContent h2 {
   text-align: right;   
 }
 
+.tab-window.maximized {
+  transform: none !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  
+  width: 100vw !important;
+  min-width: 100vw !important;
+  
+  height: calc(100vh - 82px) !important; 
+  min-height: 0 !important;
+  
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+.tab-window.maximized .window-content,
+.tab-window.maximized .window-content-tab {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+  /* Summary boxes */
+  .content-row .summary-box {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    background-color: #77685D;
+
+    min-height: 120px;
+    max-height: 120px;
+
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+
+  .content-row .summary-box:hover {
+    border: 3px solid #D2B48C;
+    background-color: seashell;
+    transform: translateY(-3px);
+  }
+
+  .content-row .summary-box h3 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #F4EBD9;
+    margin: 0 0 5px 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+  }
+
+  .content-row .summary-box p {
+    font-size: 13px;
+    color: #F4EBD9;
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .content-row .summary-box:hover h3,
+  .content-row .summary-box:hover p {
+    color: #77685D;
+  }
+
+/* =============================================== */
+
+
+@media (max-width: 1024px) {
+  .tab-window.maximized .window-content,
+  .tab-window.maximized .window-content-tab {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
 /* =========================================
    MOBILE RESPONSIVENESS
 ========================================= */
@@ -405,33 +592,35 @@ a.columnContent h2 {
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: 100vh !important;
+    height: 90.5vh !important;
     margin: 0 !important;
   }
 
-.tab-window {
-  font-family: 'Poppins', sans-serif;
-  background-color: #F4EBD9;
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  z-index: 10;
+  .tab-window {
+    background-color: #F4EBD9;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    overflow: hidden;
+    border: 1px solid #483D3F;
 
-  
-  overflow: hidden;
-  border: 1px solid #483D3F;
+    width: 850px;       
+    min-width: 400px;  
+    height: 500px;    
+    min-height: 350px;    
 
-  width: 850px;       
-  min-width: 400px;  
-  height: 500px;    
-  min-height: 350px;    
+    display: flex;
+    flex-direction: column; 
 
-  display: flex;
-  flex-direction: column; 
-}
+  }
 
   /* ENSURES CLOSE BUTTON STAYS VISIBLE ON MOBILE FOR ALL TABS */
   .tab-window .window-controls .btn.close {
-    display: block !important;
+    display: block;
+  }
+
+  .tab-window .window-controls .btn.windowed {
+    display: none;
   }
 
   .content-row {
@@ -442,6 +631,7 @@ a.columnContent h2 {
   .content-row .telephone-booth {
     display: none;
   }
+
 
   .profile-header {
     flex-direction: column;
@@ -456,5 +646,4 @@ a.columnContent h2 {
   .window-content-tab {
     padding: 20px;
   }
-
 }

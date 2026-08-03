@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'; 
+import React, { useRef, useState } from 'react'; 
 import Draggable from 'react-draggable';
 import './style/Tab_Window.css'; 
 
 import closeAudio from '../assets/audio/tab_close.wav'; 
+import clickSound from '../assets/audio/tab_open.wav';
 import clickBox from '../assets/audio/click-box.mp3';
 
 import aboutImg from '../assets/about_light.png';
@@ -16,6 +17,7 @@ import skill6 from '../assets/skill-6.png';
 
 export default function About({ isOpen, onClose, zIndex, onFocus }) {
   const nodeRef = useRef(null); 
+  const [isMaximized, setIsMaximized] = useState(false);
 
   if (!isOpen) return null;
 
@@ -32,6 +34,7 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
       onClose();
     }, 100);
   };
+  
 
   const handleBoxClick = () => {
     try {
@@ -43,22 +46,38 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
     }
   };
 
-  const startX = (window.innerWidth / 2) - 400; 
-  const startY = (window.innerHeight / 2) - 300;
+const handleMaximize = () => {
+    const nextMaximizedState = !isMaximized;
+    setIsMaximized(nextMaximizedState);
+
+    if (localStorage.getItem('isGlobalMuted') !== 'true') {
+      try {
+        const audioFile = nextMaximizedState ? clickSound : closeAudio;
+        const audio = new Audio(audioFile);
+        audio.play();
+      } catch (e) {
+        console.log("Audio failed to play:", e);
+      }
+    }
+  };
+
+  const startX = (window.innerWidth / 2) - 500; 
+  const startY = (window.innerHeight / 2) - 320;
   
   return (
     <Draggable 
       nodeRef={nodeRef} 
       handle=".title-bar" 
-      cancel=".close" 
+      cancel=".close, .windowed" 
       defaultPosition={{x: startX, y: startY}} 
       bounds="body" 
       onMouseDown={onFocus}
+      disabled={isMaximized}
     >
       
       <div 
         ref={nodeRef} 
-        className="tab-window" 
+        className={`tab-window ${isMaximized ? 'maximized' : ''}`} 
         style={{ position: 'absolute', top: 0, left: 0, zIndex: zIndex }} 
       >
           
@@ -69,11 +88,19 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
                 <img className='icon-topbar' src={aboutImg} alt="About" />
                 <span className="title">About Me</span>
               </div>
+              
               <div className="window-controls">
+
+                <button 
+                  className="btn windowed" 
+                  onClick={handleMaximize}>
+                  {isMaximized ? '[ ▭ ]' : '[ ❐ ]'}
+                </button>
+
+
                 <button 
                   className="btn close" 
-                  onClick={handleClose}
-                >
+                  onClick={handleClose}>
                   [ x ]
                 </button>
               </div>
@@ -84,8 +111,9 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
                 <img src={myProfilePic} alt="Aryll Nevin Morales" className="profile-avatar" />
                 
                 <div className="profile-info">
-                  <h1>Aryll Nevin Morales</h1>
-                  <h4>Developer | Engineer | Artist</h4>
+                  <h4>Computer Engineer | Developer | Artist</h4>
+                  <h1><strong>Aryll Nevin Morales</strong></h1>
+                  
                   <p>aryll.nevin.morales@gmail.com</p>
                 </div>
               </div>
@@ -95,10 +123,41 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
                 
                 <div className="content-square" onClick={handleBoxClick}>
                  <p>Computer Engineering graduate from De La Salle Lipa. I build and create things, 
-                  bringing highly unique, out-of-the-box ideas to life. Experienced in engineering 
-                  responsive applications, eye-catching designs, developing data structures, managing databases, 
-                  integrating AI computer vision models, and driving a 300% increase in team production output.</p>
+                 bringing highly unique, out-of-the-box ideas to life. Experienced in engineering 
+                 responsive applications, eye-catching designs, developing data structures, managing databases, 
+                 integrating AI computer vision models, and driving a 300% increase in team production output.</p>
                 </div>
+                
+                <br />
+
+                <div className="content-row" style={{ display: 'flex', flexDirection: 'row', gap: '15px' }}>
+                  
+                  <div className="summary-box">
+                    <h3>3+</h3>
+                    <p>Projects</p>
+                  </div>
+
+                  <div className="summary-box">
+                    <h3>3</h3>
+                    <p>Leadership Roles</p>
+                  </div>
+
+                  <div className="summary-box">
+                    <h3>10+</h3>
+                    <p>Skills</p>
+                  </div>
+
+                  <div className="summary-box">
+                    <h3>2</h3>
+                    <p>Awards</p>
+                  </div>
+
+                </div>
+            
+
+
+
+
                 <br />
 
                 <h2>Professional Experience</h2>

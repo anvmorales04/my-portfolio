@@ -1,0 +1,134 @@
+.resume-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden; 
+}
+
+.resume-selection-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  max-width: 450px; 
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+.resume-header-title {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #483D3F;
+  font-weight: bold;
+}
+
+.resume-option-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 150px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid #483D3F; 
+  border-radius: 4px; 
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out, background-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  box-sizing: border-box;
+}
+
+.resume-option-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: #483D3F;
+  transform: translateY(-2px); 
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.resume-option-btn.selected {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-color: #333;
+  box-shadow: inset 2px 2px 6px rgba(0,0,0,0.3);
+  transform: translateY(1px); 
+}
+
+.resume-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.resume-icon-img {
+  max-width: 45px;
+  max-height: 45px;
+  object-fit: contain; 
+}
+
+.resume-title {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #483D3F;
+}
+
+.resume-option-btn.selected .resume-title {
+  font-weight: bold;
+  color: #483D3F;
+}
+
+.confirm-container {
+  display: flex;
+  justify-content: center;
+
+
+
+  margin-top: auto; 
+  padding-top: 20px;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.confirm-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  padding: 15px 80px;
+  font-size: 18px; 
+  font-weight: bold;
+  border-radius: 6px; 
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  letter-spacing: 1px; 
+  
+  background-color: #483D3F;
+  color: #F4EBD9; 
+  border: 2px solid #483D3F;
+
+  margin-bottom: 20px;
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background-color: #5f5254; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px); 
+}
+
+.confirm-btn:disabled {
+  cursor: not-allowed;
+
+  background-color: #cccccc; 
+  color: #888888; 
+  border: 2px solid #aaaaaa;
+  opacity: 1; 
+  transform: none; 
+  box-shadow: none;
+}

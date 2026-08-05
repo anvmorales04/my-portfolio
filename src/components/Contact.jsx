@@ -2,35 +2,33 @@ import React, { useRef, useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './style/Tab_Window.css'; 
 
-import closeAudio from '../assets/audio/tab_close.wav'; 
-import clickSound from '../assets/audio/tab_open.wav'; /* ADDED THIS */
+import { playSound } from '../utils/audio';
 import contactImg from '../assets/contacts_light.png';
 import telbooth from '../assets/telephone_booth.png';
-import ringSound from '../assets/audio/tel-ring.mp3'; 
 import telIcon from '../assets/tel-icon.png';
 import emailIcon from '../assets/email-icon.png';
-import clickBox from '../assets/audio/click-box.mp3';
 
 import linkedinIcon from '../assets/linkedin-icon.png';
 import githubIcon from '../assets/github-icon.png';
-
-import hoverAudio from '../assets/audio/hover.mp3';
-import clickAudio from '../assets/audio/click.wav';
 
 export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
   const nodeRef = useRef(null); 
   const audioRef = useRef(null);
   const fadeInterval = useRef(null);
+  const shakeDurationMs = 2400;
 
   const [hasRung, setHasRung] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false); /* ADDED THIS */
 
   useEffect(() => {
-    audioRef.current = new Audio(ringSound);
-    
     return () => {
+      if (fadeInterval.current) {
+        clearInterval(fadeInterval.current);
+      }
+
       if (audioRef.current) {
         audioRef.current.pause();
+        audioRef.current.currentTime = 0;
       }
     };
   }, []);
@@ -38,20 +36,23 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
   useEffect(() => {
     if (isOpen) {
       setHasRung(false);
+
+      if (fadeInterval.current) {
+        clearInterval(fadeInterval.current);
+      }
+
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      audioRef.current = null;
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleClose = () => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const sound = new Audio(closeAudio);
-        sound.play();
-      } catch (e) {
-        console.log("No close sound found");
-      }
-    }
+    playSound('windowClose');
     
     setTimeout(() => {
       onClose();
@@ -62,53 +63,60 @@ export default function Contact({ isOpen, onClose, zIndex, onFocus }) {
       const nextMaximizedState = !isMaximized;
       setIsMaximized(nextMaximizedState);
   
-      if (localStorage.getItem('isGlobalMuted') !== 'true') {
-        try {
-          const audioFile = nextMaximizedState ? clickSound : closeAudio;
-          const audio = new Audio(audioFile);
-          audio.play();
-        } catch (e) {
-          console.log("Audio failed to play:", e);
-        }
-      }
+      playSound(nextMaximizedState ? 'windowOpen' : 'windowClose');
     };
 
   const handlePhoneHover = () => {
-    if (hasRung) return; 
-    
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      if (!audioRef.current) return;
-      if (fadeInterval.current) clearInterval(fadeInterval.current);
-      
-      audioRef.current.volume = 0.3;
-      audioRef.current.play().catch(e => console.log("Audio blocked:", e));
+    if (hasRung) return;
+
+    setHasRung(true);
+
+    if (fadeInterval.current) {
+      clearInterval(fadeInterval.current);
+      fadeInterval.current = null;
     }
+
+    const audio = playSound('telephoneRing', {
+      volume: 0.25,
+      playbackRate: 0.65,
+      ignoreMute: true,
+    });
+    audioRef.current = audio;
   };
 
-const handlePhoneLeave = () => {
+  const handlePhoneLeave = () => {
     if (!audioRef.current) return;
-    if (!hasRung) {
-      setHasRung(true); 
+
+    const fadeSteps = 24;
+    const fadeStepMs = Math.round(shakeDurationMs / fadeSteps);
+    const volumeStep = audioRef.current.volume / fadeSteps;
+    let step = 0;
+
+    if (fadeInterval.current) {
+      clearInterval(fadeInterval.current);
     }
 
     fadeInterval.current = setInterval(() => {
-      if (audioRef.current.volume > 0.05) {
-        audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.05);
-      } else {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0; 
-        clearInterval(fadeInterval.current);
+      step += 1;
+      const nextVolume = Math.max(0, audioRef.current.volume - volumeStep);
+      if (audioRef.current) {
+        audioRef.current.volume = nextVolume;
       }
-    }, 50); 
+
+      if (step >= fadeSteps || nextVolume <= 0.01) {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        }
+        audioRef.current = null;
+        clearInterval(fadeInterval.current);
+        fadeInterval.current = null;
+      }
+    }, fadeStepMs);
   };
 
   const handleLinkClick = () => {
-    try {
-      const sound = new Audio(clickAudio);
-      sound.play();
-    } catch (e) {
-      console.log("Click sound failed:", e);
-    }
+    playSound('linkClick');
   };
 
   const startX = (window.innerWidth / 2) - 500; 
@@ -118,11 +126,11 @@ const handlePhoneLeave = () => {
     <Draggable 
       nodeRef={nodeRef} 
       handle=".title-bar" 
-      cancel=".close, .windowed"  /* FIXED THIS */
+      cancel=".close, .windowed" 
       defaultPosition={{x: startX, y: startY}}
       bounds="body"
       onMouseDown={onFocus}
-      disabled={isMaximized} /* FIXED THIS */
+      disabled={isMaximized} 
     >
       <div 
         ref={nodeRef} 

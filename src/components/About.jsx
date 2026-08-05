@@ -2,9 +2,7 @@ import React, { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import './style/Tab_Window.css'; 
 
-import closeAudio from '../assets/audio/tab_close.wav'; 
-import clickSound from '../assets/audio/tab_open.wav';
-import clickBox from '../assets/audio/click-box.mp3';
+import { playSound } from '../utils/audio';
 
 import aboutImg from '../assets/about_light.png';
 import myProfilePic from '../assets/prof-pic.jpg';
@@ -22,14 +20,7 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
   if (!isOpen) return null;
 
   const handleClose = () => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const sound = new Audio(closeAudio);
-        sound.play();
-      } catch (e) {
-        console.log("No close sound found");
-      }
-    }
+    playSound('windowClose');
     setTimeout(() => {
       onClose();
     }, 100);
@@ -37,28 +28,14 @@ export default function About({ isOpen, onClose, zIndex, onFocus }) {
   
 
   const handleBoxClick = () => {
-    try {
-      const sound = new Audio(clickBox);
-      sound.volume = 0.5; 
-      sound.play();
-    } catch (e) {
-      console.log("Click sound failed:", e);
-    }
+    playSound('boxClick');
   };
 
 const handleMaximize = () => {
     const nextMaximizedState = !isMaximized;
     setIsMaximized(nextMaximizedState);
 
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const audioFile = nextMaximizedState ? clickSound : closeAudio;
-        const audio = new Audio(audioFile);
-        audio.play();
-      } catch (e) {
-        console.log("Audio failed to play:", e);
-      }
-    }
+    playSound(nextMaximizedState ? 'windowOpen' : 'windowClose');
   };
 
   const startX = (window.innerWidth / 2) - 500; 

@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './style/Taskbar.css';
 import audioOFF from '../assets/OFF_audio.png';
 import audioON from '../assets/ON_audio.png';
-import audio_ON from '../assets/audio/ON-audio.mp3';
-import audio_OFF from '../assets/audio/OFF-audio.mp3';
 import linkedIn from '../assets/linkedin_tb.png';
-import clickBtn from '../assets/audio/click-btn.mp3';
+import { playSound, setGlobalMuteState, getGlobalMuteState } from '../utils/audio';
 
 export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isShaking, setIsShaking] = useState(false);
-  const [isMuted, setIsMuted] = useState(() => {
-    return localStorage.getItem('isGlobalMuted') === 'true';
-  });
+  const [isMuted, setIsMuted] = useState(() => getGlobalMuteState());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -36,16 +32,11 @@ export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
 
   const handleToggleMute = () => {
     const newMutedState = !isMuted;
+    const soundName = newMutedState ? 'muteOff' : 'muteOn';
+
     setIsMuted(newMutedState);
-    localStorage.setItem('isGlobalMuted', newMutedState);
-    
-    try {
-      const soundFile = newMutedState ? audio_OFF : audio_ON;
-      const audio = new Audio(soundFile);
-      audio.play();
-    } catch(e) {
-      console.log("Audio failed", e);
-    }
+    setGlobalMuteState(newMutedState);
+    playSound(soundName, { ignoreMute: true });
 
     setIsShaking(true);
     setTimeout(() => setIsShaking(false), 300); 
@@ -53,12 +44,7 @@ export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
 
   const handleHomeClick = () => {
     if (!isMuted) {
-      try {
-        const audio = new Audio(clickBtn);
-        audio.play();
-      } catch(e) {
-        console.log("Audio failed", e);
-      }
+      playSound('buttonClick');
     }
     
     if (onHomeClick) {
@@ -68,12 +54,7 @@ export default function Taskbar({ onHomeClick, onLinkedInClick, isHomeOpen }) {
 
   const handleLinkedInClick = () => {
     if (!isMuted) {
-      try {
-        const audio = new Audio(clickBtn);
-        audio.play();
-      } catch(e) {
-        console.log("Audio failed", e);
-      }
+      playSound('buttonClick');
     }
     
     if (onLinkedInClick) {

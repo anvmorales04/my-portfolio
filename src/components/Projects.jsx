@@ -3,14 +3,11 @@ import Draggable from 'react-draggable';
 import './style/Tab_Window.css'; 
 import './style/Projects_Tabs.css';
 
-import closeAudio from '../assets/audio/tab_close.wav'; 
-import clickSound from '../assets/audio/tab_open.wav'; /* ADDED THIS */
+import { playSound } from '../utils/audio';
 import projectsImg from '../assets/projects_light.png';
-import hoverAudio from '../assets/audio/hover.mp3';
-import clickAudio from '../assets/audio/click.wav';
 
 import technoIcon from '../assets/techno_icon.png';
-import thesisPaper from '../assets/Group5A_TechnoFitness_CpEDesi2 Paper.pdf';
+import thesisPaper from '../assets/documents/Group5A_TechnoFitness_CpEDesi2 Paper.pdf';
 import engichefIcon from '../assets/engichef-icon.png';
 
 import tec1 from '../assets/gallery/techno/tec1.jpg';
@@ -526,14 +523,7 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
   if (!isOpen) return null;
 
   const handleClose = () => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const sound = new Audio(closeAudio);
-        sound.play();
-      } catch (e) {
-        console.log("No close sound found");
-      }
-    }
+    playSound('windowClose');
     
     setTimeout(() => {
       onClose();
@@ -545,27 +535,11 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
     const nextMaximizedState = !isMaximized;
     setIsMaximized(nextMaximizedState);
 
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const audioFile = nextMaximizedState ? clickSound : closeAudio;
-        const audio = new Audio(audioFile);
-        audio.play();
-      } catch (e) {
-        console.log("Audio failed to play:", e);
-      }
-    }
+    playSound(nextMaximizedState ? 'windowOpen' : 'windowClose');
   };
 
   const handleLinkClick = (id) => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const sound = new Audio(clickAudio);
-        sound.play();
-      } catch (e) {
-        console.log("Click sound failed:", e);
-      }
-    }
-
+    playSound('linkClick');
     setActiveTab(id);
   };
 
@@ -579,15 +553,15 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
       <Draggable 
         nodeRef={nodeRef} 
         handle=".title-bar" 
-        cancel=".close, .windowed" /* FIXED THIS */
+        cancel=".close, .windowed" 
         defaultPosition={{x: startX, y: startY}}
         bounds="body"
         onMouseDown={onFocus}
-        disabled={isMaximized} /* FIXED THIS */
+        disabled={isMaximized}
       >
         <div 
           ref={nodeRef} 
-          className={`tab-window ${isMaximized ? 'maximized' : ''}`} /* FIXED THIS */
+          className={`tab-window ${isMaximized ? 'maximized' : ''}`} 
           style={{ position: 'absolute', top: 0, left: 0, zIndex: zIndex }} 
         >
           <div className="window-entrance" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -598,7 +572,6 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
               </div>
               <div className="window-controls">
                 
-                {/* FIXED THIS: Added Maximize Button */}
                 <button 
                   className="btn windowed" 
                   onClick={handleMaximize}>

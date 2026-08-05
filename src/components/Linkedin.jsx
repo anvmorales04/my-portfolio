@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 import './style/Tab_Window.css'; 
 
-import closeAudio from '../assets/audio/tab_close.wav'; 
+import { playSound } from '../utils/audio';
 import linkedInImg from '../assets/linkedin_tb.png'; 
 
 export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
@@ -49,14 +49,7 @@ export default function Linkedin({ isOpen, onClose, zIndex, onFocus }) {
   }, [widgetReady]);
 
   const handleClose = () => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const sound = new Audio(closeAudio);
-        sound.play();
-      } catch (e) {
-        console.log("No close sound found");
-      }
-    }
+    playSound('windowClose');
     setTimeout(() => {
       onClose();
     }, 100);

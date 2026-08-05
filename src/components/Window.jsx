@@ -8,11 +8,7 @@ import aboutImg from '../assets/about.png';
 import projectsImg from '../assets/projects.png';
 import contactImg from '../assets/contact.png';
 import resumeImg from '../assets/resume.png';
-import clickSound from '../assets/audio/tab_open.wav';
-import closeAudio from '../assets/audio/tab_close.wav'; 
-import resumePdf from '../assets/Aryll-Nevin-Morales_Resume.pdf';
-
-
+import { playSound } from '../utils/audio';
 
 export default function Window({ 
   isOpen, 
@@ -20,6 +16,7 @@ export default function Window({
   onOpenAbout, 
   onOpenProjects, 
   onOpenContact,
+  onOpenResume,
   zIndex,
   onFocus
 }) {
@@ -27,53 +24,36 @@ export default function Window({
 
   if (!isOpen) return null;
   
-  const playSound = () => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const audio = new Audio(clickSound);
-        audio.play();
-      } catch (e) {
-        console.log("Audio failed to play:", e);
-      }
-    }
+  const playWindowSound = () => {
+    playSound('windowOpen');
   };
 
   const handleClose = () => {
-    if (localStorage.getItem('isGlobalMuted') !== 'true') {
-      try {
-        const sound = new Audio(closeAudio);
-        sound.play();
-      } catch (e) {
-        console.log("Close audio failed to play:", e);
-      }
-    }
+    playSound('windowClose');
     setTimeout(() => {
       if (onClose) onClose();
     }, 100);
   };
 
   const handleAboutClick = () => {
-    playSound();
+    playWindowSound();
     if (onOpenAbout) onOpenAbout();
   };
 
   const handleProjectsClick = () => {
-    playSound();
+    playWindowSound();
     if (onOpenProjects) onOpenProjects();
   };
 
   const handleContactClick = () => {
-    playSound();
+    playWindowSound();
     if (onOpenContact) onOpenContact();
   };
 
   const handleResumeClick = () => {
-    playSound();
-    window.open(resumePdf, '_blank'); 
+    playWindowSound();
+    if (onOpenResume) onOpenResume();
   };
-
-  const startX = (window.innerWidth / 2) - 350;
-  const startY = (window.innerHeight / 2) - 250;
 
   return (
     <Draggable 
@@ -84,13 +64,11 @@ export default function Window({
     bounds="body"
     onMouseDown={onFocus}
     >
-
       <div 
         ref={nodeRef} 
         className="os-window main-window-anchor" 
         style={{ position: 'absolute', zIndex: zIndex }}
       >
-
         <div className="title-bar">
           <span className="title">Portfolio Portal</span>
           
@@ -102,7 +80,6 @@ export default function Window({
         </div>
 
         <div className="window-content">
-          
           <div style={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
@@ -120,7 +97,6 @@ export default function Window({
           <h1 className="spacing-normal" style={{ margin: '10px 0' }}>
             &gt; Aryll Nevin Morales
           </h1>
-
 
           <p>Computer Engineering graduate from De La Salle Lipa. I build and create things, bringing highly unique, out-of-the-box ideas to life.</p>
           <p>Welcome to my portfolio portal! <br/>

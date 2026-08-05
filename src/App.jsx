@@ -6,6 +6,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Linkedin from './components/Linkedin';
 import DotField from './components/DotField'; 
+import Resume from './components/Resume';
 import './App.css';
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
     about: false,
     projects: false,
     contact: false,
-    linkedin: true, 
+    linkedin: true,
+    resume: false, // Added resume window state
   });
 
   const [zIndices, setZIndices] = useState({
@@ -23,7 +25,8 @@ function App() {
     about: 10,
     projects: 10,
     contact: 10,
-    linkedin: 10,   
+    linkedin: 10, 
+    resume: 10,  // Added resume z-index tracking
   });
 
   const [topZ, setTopZ] = useState(11);
@@ -56,10 +59,11 @@ function App() {
       projects: false,
       contact: false,
       linkedin: false,
+      resume: false,
     });
   };
 
-const handleHomeTaskbarClick = () => {
+  const handleHomeTaskbarClick = () => {
     if (window.innerWidth <= 850) {
       setIsHomeOpen(true);
       bringToFront('home');
@@ -97,7 +101,6 @@ const handleHomeTaskbarClick = () => {
 
   return (
     <div className="desktop-environment">
-      
       <DotField
         dotRadius={2}
         dotSpacing={16}
@@ -128,10 +131,11 @@ const handleHomeTaskbarClick = () => {
       <Window 
         isOpen={isHomeOpen} 
         onClose={() => setIsHomeOpen(false)}
-        onOpenAbout={() => openWindow('about')}     
+        onOpenAbout={() => openWindow('about')}    
         onOpenProjects={() => openWindow('projects')}
         onOpenContact={() => openWindow('contact')}  
-        zIndex={zIndices.home}             
+        onOpenResume={() => openWindow('resume')}    
+        zIndex={zIndices.home}            
         onFocus={() => bringToFront('home')} 
       />
 
@@ -161,6 +165,13 @@ const handleHomeTaskbarClick = () => {
         onClose={() => closeWindow('linkedin')}
         zIndex={zIndices.linkedin}
         onFocus={() => bringToFront('linkedin')}
+      />
+
+      <Resume 
+        isOpen={openWindows.resume} 
+        onClose={() => closeWindow('resume')}
+        zIndex={zIndices.resume}
+        onFocus={() => bringToFront('resume')}
       />
 
       <Taskbar 

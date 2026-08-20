@@ -507,8 +507,9 @@ a.columnContent h2 {
   width: 100vw !important;
   min-width: 100vw !important;
   
-  height: calc(100vh - 82px) !important; 
+  height: calc(100dvh - var(--mobile-taskbar-height, 0px)) !important;
   min-height: 0 !important;
+  bottom: var(--mobile-taskbar-height, 0px) !important;
   
   margin: 0 !important;
   border-radius: 0 !important;

@@ -148,11 +148,13 @@
   .resume-selection-container {
     flex-grow: 0;
     gap: 8px;
-    max-width: 100%;
+    width: min(100%, 345px);
+    max-width: 345px;
   }
 
   .resume-option-btn {
-    width: 105px;
+    width: calc((100% - 16px) / 3);
+    flex: 0 0 calc((100% - 16px) / 3);
     height: 105px;
     padding: 8px;
   }

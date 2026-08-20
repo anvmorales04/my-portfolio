@@ -592,7 +592,7 @@ a.columnContent h2 {
     top: 0 !important;
     left: 0 !important;
     width: 100vw !important;
-    height: 90.5vh !important;
+    height: calc(100vh - 70px) !important;
     margin: 0 !important;
   }
 

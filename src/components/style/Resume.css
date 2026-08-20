@@ -132,3 +132,54 @@
   transform: none; 
   box-shadow: none;
 }
+
+@media (max-width: 975px) {
+  .resume-body {
+    padding: 10px;
+    overflow-y: auto;
+    justify-content: center;
+  }
+
+  .resume-header-title {
+    margin: 4px 0 8px;
+    font-size: 20px;
+  }
+
+  .resume-selection-container {
+    flex-grow: 0;
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .resume-option-btn {
+    width: 105px;
+    height: 105px;
+    padding: 8px;
+  }
+
+  .resume-icon-wrapper {
+    height: 40px;
+    margin-bottom: 4px;
+  }
+
+  .resume-icon-img {
+    max-width: 36px;
+    max-height: 36px;
+  }
+
+  .resume-title {
+    font-size: 11px;
+  }
+
+  .confirm-container {
+    margin-top: 8px;
+    padding-top: 0;
+    margin-bottom: 0;
+  }
+
+  .confirm-btn {
+    padding: 10px 40px;
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+}

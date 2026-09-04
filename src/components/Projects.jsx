@@ -9,6 +9,7 @@ import projectsImg from '../assets/projects_light.png';
 import technoIcon from '../assets/techno_icon.png';
 import thesisPaper from '../assets/documents/Group5A_TechnoFitness_CpEDesi2 Paper.pdf';
 import engichefIcon from '../assets/engichef-icon.png';
+import bassintIcon from '../assets/bassint-icon-orig.png';
 
 import tec1 from '../assets/gallery/techno/tec1.jpg';
 import tec2 from '../assets/gallery/techno/tec2.jpg';
@@ -37,6 +38,14 @@ import g12 from '../assets/gallery/graphic/g12.jpg';
 import g13 from '../assets/gallery/graphic/g13.jpg';
 import g14 from '../assets/gallery/graphic/g14.jpg';
 import g15 from '../assets/gallery/graphic/g15.jpg';
+
+import bass1 from '../assets/gallery/bassint/bassint1.png';
+import bass2 from '../assets/gallery/bassint/bassint2.png';
+import bass3 from '../assets/gallery/bassint/bassint3.png';
+import bass4 from '../assets/gallery/bassint/bassint4.png';
+import bass5 from '../assets/gallery/bassint/bassint5.png';
+
+import ERD from '../assets/gallery/database/ERD.png';
 
 import podIcon from '../assets/podIcon.png';
 
@@ -93,6 +102,18 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
       { id: 15, type: 'image', src: g15 }
     ], []);
 
+    const galleryBassInt = useMemo(() => [
+      { id: 1, type: 'image', src: bass1 },
+      { id: 2, type: 'image', src: bass2 },
+      { id: 3, type: 'image', src: bass3 },
+      { id: 4, type: 'image', src: bass4 },
+      { id: 5, type: 'image', src: bass5 }
+    ], []);
+
+    const galleryDatabase = useMemo(() => [
+      { id: 1, type: 'image', src: ERD }
+    ], []);
+
   const projectsData = useMemo(() => [
     {
       id: 1,
@@ -101,6 +122,7 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
       content: (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
+
           <div className="project-square">
             <div className="info-tab" style={{ position: 'relative' }}>
               <img 
@@ -178,6 +200,8 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
               </div>
             </div>
           </div>
+
+
 
           <div className="project-square">
             <div className="info-tab" style={{ position: 'relative' }}>
@@ -264,6 +288,164 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
 
             </div>
           </div>
+
+
+          <div className="project-square">
+            
+            <div className="info-tab" style={{ position: 'relative' }}>
+              <img 
+                className="icon-style"
+                src={bassintIcon} 
+                alt="Bass Logo" 
+                style={{ 
+                  position: 'absolute', 
+                  top: '0px', 
+                  right: '0px', 
+                  width: '100px',
+                  height: 'auto',
+                  objectFit: 'contain'
+                }} 
+              />
+
+              <div className="project-tags">
+                <span className="tag software">Website</span>
+                <span className="tag render">React.JS</span>
+              </div>
+
+              <h1>Bass Intensity Website</h1>
+              <h2>Official Business Website</h2>
+
+              <div className="bullet-point-row">
+                <p>A client-facing business website built with ReactJS, featuring a dynamic UI/UX design, 
+                  custom scroll animations, and full technical SEO optimization 
+                  for local search discoverability.</p>
+              </div>
+
+              <div className="bullet-point-row">
+                <p><strong>Key Features:</strong></p>
+                <div className="project-tags">
+                  <span className="tag capability">HTML</span>
+                  <span className="tag capability">CSS</span>
+                  <span className="tag capability">JavaScript</span>
+                  <span className="tag capability">React.JS</span>
+                  <span className="tag capability">SEOs</span>
+                  <span className="tag capability">Mobile Responsive</span>
+                </div>
+              </div>
+
+              <div className="button-row">
+                <a href={'https://bass-intensity-website.vercel.app/'} target="_blank" rel="noopener noreferrer" className="button-style">
+                  Visit Website&nbsp;&nbsp;
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <div className="gallery-container">
+                {galleryBassInt.map((media) => (
+                  media.type === 'video' ? (
+                    <video 
+                      key={media.id} 
+                      src={media.src} 
+                      className="gallery-item" 
+                      muted 
+                      loop 
+                      onMouseEnter={(e) => e.target.play()}
+                      onMouseLeave={(e) => e.target.pause()}
+                      onClick={() => setSelectedMedia(media)}
+                    />
+                  ) : (
+                    <img 
+                      key={media.id} 
+                      src={media.src} 
+                      alt="Gallery content" 
+                      className="gallery-item" 
+                      onClick={() => setSelectedMedia(media)} 
+                    />
+                  )
+                ))}
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div className="project-square">
+            <div className="info-tab" style={{ position: 'relative' }}>
+
+              <div className="project-tags">
+                <span className="tag software">Database</span>
+                <span className="tag render">SQL</span>
+              </div>
+
+              <h1>Burger Joint Database</h1>
+              <h2>Database Final Project</h2>
+
+              <div className="bullet-point-row">
+                <p>This database project was created as a final project for the Database Management Systems course.
+                  It presents a relational database system for a burger joint designed to manage core 
+                  aspects such as inventory, supplier, ingredients, categories, menu, customers, staff, 
+                  orders, order status, and order items. </p>
+              </div>
+
+              <div className="bullet-point-row">
+                <p><strong>Key Features:</strong></p>
+                <div className="project-tags">
+                  <span className="tag capability">SQL</span>
+                  <span className="tag capability">Oracle</span>
+                  <span className="tag capability">Database Design</span>
+                  <span className="tag capability">Entity Relationship Diagram</span>
+                </div>
+              </div>
+
+              <div className="button-row">
+                <a href={'./assets/gallery/database/Database-BurgerJoint.sql'} download className="button-style">
+                  Download SQL File&nbsp;&nbsp;
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <div className="gallery-container">
+                {galleryDatabase.map((media) => (
+                  media.type === 'video' ? (
+                    <video 
+                      key={media.id} 
+                      src={media.src} 
+                      className="gallery-item" 
+                      muted 
+                      loop 
+                      onMouseEnter={(e) => e.target.play()}
+                      onMouseLeave={(e) => e.target.pause()}
+                      onClick={() => setSelectedMedia(media)}
+                    />
+                  ) : (
+                    <img 
+                      key={media.id} 
+                      src={media.src} 
+                      alt="Gallery content" 
+                      className="gallery-item" 
+                      onClick={() => setSelectedMedia(media)} 
+                    />
+                  )
+                ))}
+              </div>
+
+            </div>
+            
+
+          </div>
+
+
+
+          
 
         </div>
       )

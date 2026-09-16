@@ -560,6 +560,67 @@ export default function Projects({ isOpen, onClose, zIndex, onFocus }) {
             </iframe>
           </div>
 
+
+          <div className="project-square">
+            <div className="info-tab" style={{ position: 'relative' }}>
+
+              <div className="project-tags">
+                <span className="tag render">Video Production</span>
+                <span className="tag capability">Trailer</span>
+              </div>
+              
+              <h1>ACES Teaser Trailers</h1>
+              <h2></h2>
+              
+              <div className="bullet-point-row">
+                <p>A collection of teaser trailers for the Association of Computer Engineering Students. These
+                  include the school year 2024 - 2025 teaser trailer and the ACES Month 2024 teaser trailer. 
+                  The trailers are designed to generate excitement and anticipation for upcoming events, 
+                  highlighting the vibrant community and activities within the organization.
+                </p>
+              </div>
+
+              <br/>
+
+              {/* ACES Month 2024 Teaser Trailer */}
+              <iframe 
+                src="https://www.youtube.com/embed/zubIpzBwPtE?si=LwL35GdkIkebaryU" 
+                title="ACES Month 2024 Teaser Trailer"
+                style={{ 
+                  width: '100%', 
+                  aspectRatio: '16 / 9', 
+                  border: 'none', 
+                  overflow: 'hidden',
+                  borderRadius: '8px' 
+                }} 
+                scrolling="no" 
+                frameBorder="0" 
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+                allowFullScreen>
+              </iframe>
+
+              <br/><br/>
+              {/* ACES Teaser Trailer 2024 - 2025 */}
+              <iframe 
+                src="https://www.youtube.com/embed/X3854vvcBes?si=T_HLqyKf5-D18VUE" 
+                title="ACES Teaser Trailer 2024 - 2025"
+                style={{ 
+                  width: '100%', 
+                  aspectRatio: '16 / 9', 
+                  border: 'none', 
+                  overflow: 'hidden',
+                  borderRadius: '8px' 
+                }} 
+                scrolling="no" 
+                frameBorder="0" 
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" 
+                allowFullScreen>
+              </iframe>
+
+            </div>
+        </div>
+
+
           <div className="project-square"> 
             <div className="project-tags">
               <span className="tag render">Video Production</span>
